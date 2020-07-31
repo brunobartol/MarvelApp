@@ -75,7 +75,7 @@ extension MarvelAPI {
         let encoder = URLEncodedFormParameterEncoder(encoder: URLEncodedFormEncoder(arrayEncoding: .noBrackets), destination: .queryString)
 
         let encodedRequest = try encoder.encode(parameters, into: request)
-        
+                
         return encodedRequest
     }
 }

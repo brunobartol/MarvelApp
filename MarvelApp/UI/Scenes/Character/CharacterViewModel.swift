@@ -1,9 +1,11 @@
 import Combine
 import SwiftUI
 
-final class CharacterViewModel: ObservableObject {
-    @Published var characterName: String = ""
+final class CharacterViewModel: ViewModelProtocol {
+    @Published var name: String = ""
     @Published var dataSource: [Character] = []
+    @Published var recentlySearched: [Character] = []
+    @Published var popular: [Character] = []
     
     static var safeAreaInsetBottom: CGFloat {
         UIApplication.shared.windows
@@ -19,7 +21,7 @@ final class CharacterViewModel: ObservableObject {
     init(
         scheduler: DispatchQueue = DispatchQueue(label: "CharacterViewModel")
     ) {
-        $characterName
+        $name
             .dropFirst(1)
             .debounce(for: .seconds(0.3), scheduler: scheduler)
             .sink(receiveValue: fetchByName)
@@ -40,7 +42,11 @@ final class CharacterViewModel: ObservableObject {
             .assign(to: \.keyboardOffset, on: self)
             .store(in: &cancellables)
     }
-    
+}
+
+//MARK: -- Fetch characters by name
+
+extension CharacterViewModel {
     func fetchByName(name: String) {
         service.charactersByName(name: name)
             .receive(on: DispatchQueue.main)
@@ -57,3 +63,18 @@ final class CharacterViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 }
+
+//MARK: -- Update recently searched characters
+
+extension CharacterViewModel {
+    func updateRecentlySearched(element: Character) {
+        
+        if !recentlySearched.contains(element) {
+            recentlySearched.append(element)
+            recentlySearched.reverse()
+        }
+    }
+}
+
+//MARK: -- Popular characters list
+

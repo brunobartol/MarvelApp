@@ -1,6 +1,6 @@
 import Foundation
 
-struct Character: Equatable, Identifiable {
+struct Character: ListItemProtocol, Equatable {
     
     let id: Int?
     let name: String?
@@ -21,9 +21,7 @@ struct Character: Equatable, Identifiable {
         case stories
         case events
     }
-}
-
-extension Character: Decodable {
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decodeIfPresent(Int.self, forKey: .id)

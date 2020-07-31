@@ -3,8 +3,7 @@ import SwiftUI
 
 struct CharacterView: View {
     @ObservedObject private var viewModel: CharacterViewModel
-    @State private var isPresented: Bool = false
-    @State var selectedCharacter: Character?
+    @State private var showSearch: Bool = false
     
     init(viewModel: CharacterViewModel) {
         self.viewModel = viewModel
@@ -15,9 +14,15 @@ struct CharacterView: View {
         ZStack {
             VStack {
                 searchField
-                characterList
-                    .padding()
-            }.navigationBarTitle("Marvel Heroes", displayMode: .inline)
+                
+                if self.showSearch {
+                    SearchView<CharacterViewModel>(viewModel: self.viewModel)
+                } else {
+                    ListView<CharacterViewModel>(viewModel: self.viewModel)
+                }
+                
+            }.navigationBarTitle("")
+            .navigationBarHidden(true)
         }.background(Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all))
     }
 }
@@ -25,42 +30,8 @@ struct CharacterView: View {
 extension CharacterView {
     private var searchField: some View {
         SearchBar(
-            text: $viewModel.characterName,
-            image: Image(systemName: "person"),
-            placeholder: "Search heroes"
-        )
-    }
-}
-
-extension CharacterView {
-    private var characterList: some View {
-        List {
-            ForEach(viewModel.dataSource, id: \.id) { character in
-                HStack {
-                    //character thumbnail
-                    AsyncImage(
-                        loader: ImageLoader(thumbnail: character.thumbnail, size: .small),
-                        placeholder: self.spinner,
-                        configuration: { $0.resizable() }
-                    ).fixedSize()
-                    
-                    //character name
-                    Text(character.name!).foregroundColor(Color(UIColor.label))
-                    
-                }.listRowBackground(Color(UIColor.systemBackground))
-                .onTapGesture {
-                    self.isPresented.toggle()
-                    self.selectedCharacter = character
-                }
-            }
-        }.sheet(isPresented: $isPresented) {
-            CharacterDetailView(character: self.$selectedCharacter)
-        }
-    }
-}
-
-extension CharacterView {
-    private var spinner: some View {
-        Spinner(isAnimating: true, style: .medium)
+            show: self.$showSearch,
+            text: $viewModel.name
+        ).padding(.bottom, 30)
     }
 }

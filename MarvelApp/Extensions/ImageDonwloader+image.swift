@@ -17,7 +17,7 @@ extension ImageDownloader {
             
             do {
                 let urlRequest = try MarvelAPI.image(destination: urlString).asURLRequest()
-                
+                                                
                 imageDownloader.download(urlRequest) { response in
                     if case .success(let image) = response.result {
                         promise(.success(image))

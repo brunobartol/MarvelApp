@@ -15,7 +15,7 @@ struct ComicView: View {
         
         ZStack {
             VStack {
-                searchBar
+                //searchBar
                 comicList
             }.navigationBarTitle("Comics", displayMode: .inline)
             
@@ -34,13 +34,12 @@ extension ComicView {
 }
 
 extension ComicView {
-    private var searchBar: some View {
-        SearchBar(
-            text: $viewModel.comicName,
-            image: Image(systemName: "book"),
-            placeholder: "Search comics"
-        )
-    }
+//    private var searchBar: some View {
+//        SearchBar(
+//            text: $viewModel.comicName,
+//            placeholder: "Search comics"
+//        )
+//    }
 }
 
 struct ComicView_Previews: PreviewProvider {
