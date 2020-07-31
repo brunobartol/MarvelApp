@@ -1,9 +1,11 @@
 import Combine
 import SwiftUI
 
-class ComicViewModel: ObservableObject {
-    @Published var comicName: String = ""
+class ComicViewModel: ViewModelProtocol {
+    @Published var name: String = ""
     @Published var dataSource: [Comic] = []
+    @Published var recentlySearched: [Comic] = []
+    @Published var popular: [Comic] = []
     
     static var safeAreaInsetBottom: CGFloat {
         UIApplication.shared.windows
@@ -20,7 +22,7 @@ class ComicViewModel: ObservableObject {
         scheduler: DispatchQueue = DispatchQueue(label: "ComicViewModel")
     ) {
         
-        $comicName
+        $name
             .dropFirst(1)
             .debounce(for: .seconds(0.3), scheduler: scheduler)
             .sink(receiveValue: fetchByName)
@@ -62,3 +64,13 @@ class ComicViewModel: ObservableObject {
     }
 }
 
+//MARK: -- Update recently searched characters
+
+extension ComicViewModel {
+    func updateRecentlySearched(element: Comic) {
+        if !self.recentlySearched.contains(element) {
+            self.recentlySearched.append(element)
+            self.recentlySearched.reverse()
+        }
+    }
+}

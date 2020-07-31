@@ -46,7 +46,7 @@ class JSONCodingKey: CodingKey {
 }
 
 class JSONAny: Codable, Identifiable {
-
+    
     let id = UUID()
     
     let value: Any

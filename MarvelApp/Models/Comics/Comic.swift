@@ -1,6 +1,8 @@
 import Foundation
 
-struct Comic: Identifiable {
+struct Comic: ListItemProtocol {
+    var name: String?
+    
     let id: Int?
     let digitalId: Int?
     let title: String?
@@ -96,6 +98,8 @@ extension Comic: Decodable {
         self.characters = try container.decodeIfPresent(CharacterList.self, forKey: .characters)
         self.stories = try container.decodeIfPresent(StoryList.self, forKey: .stories)
         self.events = try container.decodeIfPresent(EventList.self, forKey: .events)
+        
+        self.name = self.title
     }
 }
 
@@ -135,3 +139,8 @@ extension Comic: Encodable {
     }
 }
 
+extension Comic: Equatable {
+    static func == (lhs: Comic, rhs: Comic) -> Bool {
+        lhs.id == rhs.id
+    }
+}

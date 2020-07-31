@@ -68,10 +68,9 @@ extension CharacterViewModel {
 
 extension CharacterViewModel {
     func updateRecentlySearched(element: Character) {
-        
-        if !recentlySearched.contains(element) {
-            recentlySearched.append(element)
-            recentlySearched.reverse()
+        if !self.recentlySearched.contains(element) {
+            self.recentlySearched.append(element)
+            self.recentlySearched.reverse()
         }
     }
 }

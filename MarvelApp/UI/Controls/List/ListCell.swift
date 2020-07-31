@@ -3,6 +3,12 @@ import SwiftUI
 struct ListCell<T: ListItemProtocol>: View {
     let listItem: T
     
+    private var description: String {
+        guard let description = listItem.description else { return "Missing" }
+        return description
+    }
+
+    
     var body: some View {
     
     ZStack(alignment: .leading) {
@@ -32,7 +38,7 @@ struct ListCell<T: ListItemProtocol>: View {
                         .padding(.top, 20)
                     
                     HStack {
-                        Text(listItem.description!)
+                        Text(description)
                             .font(.caption)
                             .lineLimit(4)
                             .multilineTextAlignment(.leading)
