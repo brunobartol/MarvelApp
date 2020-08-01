@@ -31,41 +31,6 @@ struct LaunchMainView: View {
                 .background(Color(UIColor.systemBackground))
             }
         }
-        
-        
-//        TabView(selection: $selectedTab) {
-//            NavigationView {
-//                CharacterView(viewModel: CharacterViewModel())
-//            }
-//            .tabItem {
-//                Image(systemName: "person.fill")
-//                Text("Heroes")
-//            }.tag(Tab.characters)
-//
-//            NavigationView {
-//                ComicView(viewModel: ComicViewModel())
-//            }
-//            .tabItem {
-//                Image(systemName: "book.fill")
-//                Text("Comics")
-//            }.tag(Tab.comics)
-//
-//            NavigationView {
-//                SettingsView(isDark: true)
-//            }
-//            .tabItem {
-//                Image(systemName: "gear")
-//                Text("Settings")
-//            }.tag(Tab.settings)
-//        }
-    }
-}
-
-private extension LaunchMainView {
-    enum Tab: Int {
-        case characters
-        case comics
-        case settings
     }
 }
 
