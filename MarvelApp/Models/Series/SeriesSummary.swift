@@ -1,6 +1,6 @@
 import Foundation
 
-struct SeriesSummary: Equatable {
+struct SeriesSummary: Equatable, Hashable {
     
     let resourceURI: String?
     let name: String?

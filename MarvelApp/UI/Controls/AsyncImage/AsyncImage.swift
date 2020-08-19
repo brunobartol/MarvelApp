@@ -2,8 +2,8 @@ import SwiftUI
 import Combine
 
 enum ImageSize: String {
-    case small = "/portrait_uncanny."
-    case large = "/detail."
+    case small = "/portrait_xlarge."
+    case large = "/portrait_uncanny."
 }
 
 struct AsyncImage<Placeholder: View>: View {

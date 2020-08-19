@@ -1,15 +1,21 @@
 import SwiftUI
 
-struct DetailView<T: ListItemProtocol>: View {
+struct DetailView<T: ListItemProtocol, Content: View>: View {
     @Binding var item: T?
+    let content: Content
+    
+    init(item: Binding<T?>, @ViewBuilder content: () -> Content) {
+        self._item = item
+        self.content = content()
+    }
     
     var body: some View {
         ScrollView {
             VStack {
                 ZStack {
-                    //character thumbnail
+                    //character or comic thumbnail
                     AsyncImage(
-                        loader: ImageLoader(thumbnail: item?.thumbnail, size: .small),
+                        loader: ImageLoader(thumbnail: item?.thumbnail, size: .large),
                         placeholder: Spinner(isAnimating: true, style: .medium),
                         configuration: { $0.resizable() }
                     ).aspectRatio(contentMode: .fill)
@@ -27,25 +33,10 @@ struct DetailView<T: ListItemProtocol>: View {
 
                     Spacer()
                 }.padding()
+            
+                content
                 
-                VStack(alignment: .leading, spacing: 5) {
-                    Text("Description")
-                        .font(.headline)
-                        .foregroundColor(Color(UIColor.black))
-                    
-                    Text(item!.description != nil ? item!.description! : "Missing")
-                        .lineLimit(nil)
-                        .font(.body)
-                        .foregroundColor(Color(UIColor.secondaryLabel))
-                }.padding()
-                
-                VStack {
-                    Text("List of stories where you can find this hero")
-                        .padding()
-                        .font(.headline)
-                        .foregroundColor(Color(UIColor.label))
-                }
-            }
+            }.background(Color(UIColor.systemBackground))
         }
     }
 }

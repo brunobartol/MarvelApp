@@ -27,8 +27,9 @@ struct ListView<T: ViewModelProtocol>: View {
                 }
             }.sheet(isPresented: $modalPresented) {
                 VStack {
-                    DetailView<T.T>(item: self.$selectedElement)
-                    Text("Test")
+                    DetailView(item: self.$selectedElement) {
+                        T.T.Type.self == Character.self ? CharacterDetailView(character: self.$selectedElement as! Binding<Character?>) : CharacterDetailView(character: self.$selectedElement as! Binding<Character?>)
+                    }
                 }
             }
         }

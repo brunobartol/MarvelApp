@@ -1,6 +1,7 @@
 import Foundation
 
-struct CharacterSummary {
+struct CharacterSummary: Identifiable {
+    let id: UUID
     let resourceURI: String?
     let name: String?
     let role: String?
@@ -14,6 +15,7 @@ struct CharacterSummary {
 
 extension CharacterSummary: Decodable {
     init(from decoder: Decoder) throws {
+        self.id = UUID()
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.resourceURI = try container.decodeIfPresent(String.self, forKey: .resourceURI)
         self.name = try container.decodeIfPresent(String.self, forKey: .name)

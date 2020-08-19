@@ -46,7 +46,18 @@ extension SearchView {
             }
         }
         .sheet(isPresented: $isPresented) {
-            DetailView<T.T>(item: self.$selectedItem)
+            DetailView(item: self.$selectedItem) {
+                self.showDetails()
+            }
+        }
+    }
+    
+    private func showDetails() -> AnyView {
+        switch self.selectedItem {
+        case is Comic:
+            return ComicDetailView(comic: self.$selectedItem as! Binding<Comic?>).eraseToAnyView()
+        default:
+            return CharacterDetailView(character: self.$selectedItem as! Binding<Character?>).eraseToAnyView()
         }
     }
 }
